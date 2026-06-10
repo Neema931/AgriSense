@@ -25,7 +25,7 @@ export default function Signup({ onNavigate }) {
     return (
         <div className="signup-container">
             <div className="signup-box">
-
+                <Navbar onNavigate={onNavigate} />
                 <div className="brand">
                     <h1>AGRI SENSE 🌱</h1>
                     <p>

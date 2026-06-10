@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: inherit;
   background: linear-gradient(180deg, #f3f7f2 0%, #ffffff 100%);
   padding: 32px;
 }
@@ -138,7 +138,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: inherit;
     background-color: #f5f7f5;
 }
 
@@ -272,4 +272,203 @@ form button[type="submit"]:hover {
     .brand h1 {
         font-size: 1.7rem;
     }
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 60px;
+
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ===== LOGO ===== */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2E7D32;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+}
+
+/* ===== LINKS ===== */
+
+.navbar-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #2E7D32;
+}
+
+/* ===== BUTTONS ===== */
+
+.navbar-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.login-btn {
+  padding: 10px 18px;
+  border: 1px solid #2E7D32;
+  background: transparent;
+  color: #2E7D32;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.login-btn:hover {
+  background-color: #f0f7f0;
+}
+
+.signup-btn {
+  padding: 10px 18px;
+  border: none;
+  background-color: #2E7D32;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.signup-btn:hover {
+  background-color: #1b5e20;
+}
+
+/* Nav link buttons (styled like links) */
+.nav-link {
+  all: unset;
+  cursor: pointer;
+  color: #2e7d32;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background: rgba(46,125,50,0.08);
+}
+
+/* HERO and HOME */
+.home-container {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 0 20px 60px;
+}
+
+.hero-section {
+  margin-top: 18px;
+  background: linear-gradient(90deg, rgba(46,125,50,0.04), rgba(46,125,50,0.02));
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.hero-image {
+  display: flex;
+  align-items: center;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-text {
+  color: #ffffff;
+  padding: 28px;
+  margin: 24px;
+  border-radius: 12px;
+  max-width: 560px;
+}
+
+.hero-text h2 {
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.learn-more-btn {
+  margin-top: 12px;
+  padding: 10px 18px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.learn-more-btn:hover { background: #235a1f; }
+
+.features-section {
+  margin-top: 28px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.feature-card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20,40,20,0.04);
+  border: 1px solid rgba(12,18,12,0.04);
+}
+
+.stats-section { margin-top: 28px; display:flex; gap: 18px; flex-wrap:wrap }
+.stat-card { flex:1; min-width:160px; background:#fff; padding:18px; border-radius:12px; text-align:center; box-shadow:0 6px 18px rgba(20,40,20,0.04); }
+
+/* Utilities */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px }
+
+@media (max-width: 900px) {
+  .hero-text { margin: 18px; padding: 18px }
+  .hero-image { min-height: 240px }
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .navbar-links {
+    gap: 15px;
+    font-size: 0.9rem;
+  }
+
+  .navbar-buttons {
+    width: 100%;
+    justify-content: center;
+  }
 }
