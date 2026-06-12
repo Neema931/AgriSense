@@ -1,11 +1,11 @@
 import "./style.css";
+import logo from "../assets/agriLogo.png";
 
 export default function Navbar({ onNavigate }) {
     return (
         <div className="navbar">
             <div className="navbar-logo">
-                <span className="logo-icon">🌾</span>
-                <span className="logo-text">AgriSense</span>
+                <img src={logo} alt="AgriSense logo" className="logo-icon" />
             </div>
 
             <ul className="navbar-links">

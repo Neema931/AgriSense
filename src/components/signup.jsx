@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./style.css";
+import logo from "../assets/agriLogo.png";
 
 export default function Signup({ onNavigate }) {
     const [name, setName] = useState("");
@@ -25,12 +26,8 @@ export default function Signup({ onNavigate }) {
     return (
         <div className="signup-container">
             <div className="signup-box">
-                <Navbar onNavigate={onNavigate} />
                 <div className="brand">
-                    <h1>AGRI SENSE 🌱</h1>
-                    <p>
-                        Join AGRI SENSE today and start making smarter farming decisions.
-                    </p>
+                    <img src={logo} alt="AgriSense logo" className="brand-logo" />
                 </div>
 
                 <h2>Create Account</h2>

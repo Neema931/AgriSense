@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./style.css";
+import logo from "../assets/agriLogo.png";
+
 
 export default function Login({ onNavigate }) {
     const [email, setEmail] = useState("");
@@ -14,12 +16,8 @@ export default function Login({ onNavigate }) {
         <div className="login-container">
             <div className="login-box">
                 <div className="brand">
-                    <h1>AGRI SENSE 🌱</h1>
-                    <p className="tag">Welcome to AGRI SENSE!</p>
+                    <img src={logo} alt="AgriSense logo" className="brand-logo" />
                 </div>
-
-                <h2>Login</h2>
-                <p>Welcome back! Please enter your credentials to log in.</p>
 
                 <form onSubmit={handleLogin}>
                     <label>Email or Phone Number</label>
