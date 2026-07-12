@@ -1,8 +1,6 @@
-import Navbar from "./navbar";
+import { useEffect, useState } from "react";
 import "./style.css";
 import {
-  BarChart,
-  Bar,
   LineChart,
   Line,
   XAxis,
@@ -21,7 +19,40 @@ const chartData = [
   { month: "May", yield: 96, rainfall: 82 },
 ];
 
-export default function Dashboard({ onNavigate }) {
+export default function Dashboard() {
+  const [overview, setOverview] = useState({
+    farmName: "Loading...",
+    cropType: "Maize",
+    growthStage: "Tasseling",
+    soilMoisture: 0,
+    temperature: 0,
+    humidity: 0,
+    riskScore: 0,
+    yieldForecast: "Loading...",
+    nextIrrigation: "Coming soon",
+  });
+
+  useEffect(() => {
+    const fetchOverview = async () => {
+      try {
+        const token = localStorage.getItem("agrisense-token");
+        const response = await fetch("http://127.0.0.1:5000/api/farm/overview", {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setOverview(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchOverview();
+  }, []);
+
   return (
     <div className="dashboard-page">
       <header className="dashboard-topbar">
@@ -40,55 +71,48 @@ export default function Dashboard({ onNavigate }) {
 
       <section className="dashboard-summary">
         <article className="summary-card summary-card-highlight">
-          <p>Crop Health</p>
-          <h2>Excellent</h2>
-          <span className="metric-change positive">+12% last week</span>
-        </article>
-        <article className="summary-card">
-          <p>Yield Forecast</p>
-          <h2>1.8 t/acre</h2>
-          <span className="metric-change positive">Up 8% vs last season</span>
-        </article>
-        <article className="summary-card">
-          <p>Weather</p>
-          <h2>Sunny</h2>
-          <span className="metric-change positive">28°C, Low wind</span>
+          <p>Farm Focus</p>
+          <h2>{overview.farmName}</h2>
+          <span className="metric-change positive">{overview.cropType} • {overview.growthStage}</span>
         </article>
         <article className="summary-card">
           <p>Soil Moisture</p>
-          <h2>78%</h2>
-          <span className="metric-change positive">Optimal range</span>
+          <h2>{overview.soilMoisture}%</h2>
+          <span className="metric-change positive">Ideal for maize irrigation at current stage</span>
+        </article>
+        <article className="summary-card">
+          <p>Maize Climate</p>
+          <h2>{overview.temperature}°C</h2>
+          <span className="metric-change positive">Humidity {overview.humidity}% · Balanced for tasseling</span>
+        </article>
+        <article className="summary-card">
+          <p>Risk Score</p>
+          <h2>{overview.riskScore}</h2>
+          <span className="metric-change positive">Low pressure today</span>
         </article>
       </section>
 
-      <section className="weather-widgets">
-        <h3 className="section-title">Real-Time Monitoring</h3>
-        <div className="widgets-grid">
-          <div className="weather-widget">
-            <div className="widget-icon">🌡️</div>
-            <p className="widget-label">Temperature</p>
-            <h3 className="widget-value">28°C</h3>
-            <p className="widget-status">Optimal for growth</p>
-          </div>
-          <div className="weather-widget">
-            <div className="widget-icon">💧</div>
-            <p className="widget-label">Rainfall Probability</p>
-            <h3 className="widget-value">35%</h3>
-            <p className="widget-status">Light showers expected</p>
-          </div>
-          <div className="weather-widget">
-            <div className="widget-icon">🌱</div>
-            <p className="widget-label">Soil Moisture</p>
-            <h3 className="widget-value">78%</h3>
-            <p className="widget-status">Schedule watering</p>
-          </div>
-          <div className="weather-widget">
-            <div className="widget-icon">📈</div>
-            <p className="widget-label">Crop Health Score</p>
-            <h3 className="widget-value">92/100</h3>
-            <p className="widget-status">Excellent condition</p>
-          </div>
-        </div>
+      <section className="dashboard-summary secondary-summary">
+        <article className="summary-card">
+          <p>Yield Forecast</p>
+          <h2>{overview.yieldForecast}</h2>
+          <span className="metric-change positive">+8% vs last season</span>
+        </article>
+        <article className="summary-card">
+          <p>Water Efficiency</p>
+          <h2>91%</h2>
+          <span className="metric-change positive">Savings above target</span>
+        </article>
+        <article className="summary-card">
+          <p>Alerts</p>
+          <h2>3</h2>
+          <span className="metric-change positive">2 high priority</span>
+        </article>
+        <article className="summary-card">
+          <p>Next Irrigation</p>
+          <h2>{overview.nextIrrigation}</h2>
+          <span className="metric-change positive">Scheduled for your maize block</span>
+        </article>
       </section>
 
       <section className="dashboard-grid">
@@ -106,32 +130,10 @@ export default function Dashboard({ onNavigate }) {
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis dataKey="month" stroke="#475569" />
                 <YAxis stroke="#475569" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #e2e8f0",
-                    borderRadius: "0.5rem",
-                  }}
-                />
+                <Tooltip contentStyle={{ backgroundColor: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "0.75rem" }} />
                 <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="yield"
-                  stroke="#059669"
-                  strokeWidth={2}
-                  dot={{ fill: "#059669", r: 4 }}
-                  activeDot={{ r: 6 }}
-                  name="Yield %"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="rainfall"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  dot={{ fill: "#3b82f6", r: 4 }}
-                  activeDot={{ r: 6 }}
-                  name="Rainfall mm"
-                />
+                <Line type="monotone" dataKey="yield" stroke="#2e7d32" strokeWidth={2} dot={{ fill: "#2e7d32", r: 4 }} activeDot={{ r: 6 }} name="Yield %" />
+                <Line type="monotone" dataKey="rainfall" stroke="#66bb6a" strokeWidth={2} dot={{ fill: "#66bb6a", r: 4 }} activeDot={{ r: 6 }} name="Rainfall mm" />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -141,21 +143,15 @@ export default function Dashboard({ onNavigate }) {
           <div className="insights-badge">AI Insights</div>
           <div className="insights-card">
             <h3>Smart Irrigation</h3>
-            <p>
-              Align watering schedules with forecasts and soil sensors to save water and boost yields.
-            </p>
+            <p>Align watering schedules with forecasts and soil sensors to save water and boost yields.</p>
           </div>
           <div className="insights-card">
             <h3>Pest Prevention</h3>
-            <p>
-              Receive alerts for pest risk and deploy targeted treatment only where needed.
-            </p>
+            <p>Receive alerts for pest risk and deploy targeted treatment only where needed.</p>
           </div>
           <div className="insights-card">
             <h3>Yield Optimization</h3>
-            <p>
-              Use predictive analytics to maximize crop quality with optimized input timing.
-            </p>
+            <p>Use predictive analytics to maximize maize quality with optimized input timing.</p>
           </div>
         </aside>
       </section>
@@ -184,21 +180,21 @@ export default function Dashboard({ onNavigate }) {
             <p>01</p>
             <div>
               <h4>Activate smart irrigation</h4>
-              <p>Save water and increase consistency with automated watering based on plant stress and forecast data.</p>
+              <p>Save water with automated watering based on plant stress and forecast data.</p>
             </div>
           </div>
           <div className="action-item">
             <p>02</p>
             <div>
               <h4>Deploy pest monitoring</h4>
-              <p>Use alerts and risk scores to apply treatment only where pests are detected, reducing chemical use.</p>
+              <p>Use alerts and risk scores to apply treatment only where pests are detected.</p>
             </div>
           </div>
           <div className="action-item">
             <p>03</p>
             <div>
-              <h4>Review yield projections</h4>
-              <p>Analyze forecast models and adjust your crop plan for the highest return on investment.</p>
+              <h4>Review maize yield projections</h4>
+              <p>Analyze forecast models and adjust your maize plan for the highest return on investment.</p>
             </div>
           </div>
         </div>
