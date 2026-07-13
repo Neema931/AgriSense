@@ -7,6 +7,7 @@ import Home from "./components/home";
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
 import Layout from "./components/layout";
+import { FeaturesPage, HowItWorksPage, ContactPage } from "./components/marketing_pages";
 
 const Dashboard = lazy(() => import("./components/dashboard"));
 const MyFarm = lazy(() => import("./components/myfarm"));
@@ -54,7 +55,7 @@ function App() {
     navigate("/");
   };
 
-  const publicRoutes = ["/", "/login", "/signup", "/forgot-password"];
+  const publicRoutes = ["/", "/login", "/signup", "/forgot-password", "/features", "/how-it-works", "/contact"];
   const showNavbar = publicRoutes.includes(location.pathname);
 
   return (
@@ -67,6 +68,9 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           <Route
             path="/dashboard"
